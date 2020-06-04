@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--bootstrap要导入的文件-->
+    <script th:src="@{/js/jquery-1.12.4.js}"></script>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>后台管理</h1>
+        </div>
+    </div>
+    <div class="page-header">
+        <h3>商品列表</h3>
+        <span class="pull-right"><a th:href="@{/tmall/toadd}">新增</a></span>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <tr>
+                    <th>编号</th>
+                    <th>图片</th>
+                    <th>名称</th>
+                    <th>原价</th>
+                    <th>现价</th>
+                    <th>库存</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="p:${plist}">
+                    <td th:text="${p.id}"></td>
+                    <td><img th:src="@{${p.pimg}}" width="50" height="50" class="img-responsive"></td>
+                    <td th:text="${p.pname}"></td>
+                    <td th:text="${p.price1}"></td>
+                    <td th:text="${p.price2}"></td>
+                    <td th:text="${p.pcount}"></td>
+                    <td >修改 删除</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

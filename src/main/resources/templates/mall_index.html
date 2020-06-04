@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+ <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">    
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>Document</title>
+	<div th:replace="includeJS::tmallindex"></div>
+  <style>
+	.new{
+	position:absolute;
+	top:-2px;
+	right:-1px
+	}
+  </style>
+ 
+ </head>
+ <body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<!--当页面变小，导航栏显示三条线的菜单按钮-->
+				<button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my_nav">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<!--log-->
+				<a class="navbar-brand" style="padding:5px 15px 0px 15px;">
+					<img th:src="@{/img/tmall.jpeg}" class="img-responsive" width="50" height="50"/>
+				</a>
+			</div>
+			<div class="collapse navbar-collapse" id="my_nav">
+				<ul class="nav navbar-nav">
+					<!--active 选中样式-->
+					<li class="active">
+						<a href="#">全球购</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" data-toggle="dropdown">
+						快捷通道
+						<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">个人中心</a></li>
+							<li><a href="#">我的银行卡</a></li>
+							<li><a href="#">收货地址</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" data-toggle="dropdown">
+						个人
+						<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">个人中心</a></li>
+							<li><a href="#">我的银行卡</a></li>
+							<li><a href="#">收货地址</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">购物车  <span class="glyphicon glyphicon-shopping-cart"></span></a>
+					</li>
+					<li><a th:href="@{/tmall/prolist}">后台管理</a></li>
+				</ul>
+				<!--导航栏的搜索组件-->
+				<form class="navbar-form navbar-right">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="请输入要搜索的内容.."/>
+						<span class="input-group-btn">
+							<button class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>
+ 	<!--container 页面左右两边会预留一些间隙
+	container-fluid 100%填充整个页面
+	-->
+	<br/>
+	<br/>
+	<br/>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<img th:src="@{/img/mac.jpeg}" class="img-responsive"/>
+			</div>
+		</div>
+		<!--段落标题-->
+		<div class="page-header">
+			<h3>热卖商品
+			
+				<small class="pull-right">查看所有</small>
+			</h3>
+		</div>
+		<!--商品列表-->
+		<div class="row">
+
+			<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" th:each="p:${pager.data}">
+				<div class="thumbnail">
+					<a th:href="@{/tmall/product(id=${p.id})}">
+						<img th:src="@{${p.pimg}}" class="img-responsive"/>
+					</a>
+					<div class="caption">
+						 <h3 th:text="${p.pname}">Macbook Pro</h3>
+						<p>性价比最高的苹果电脑</p>
+						<p>
+						  <del th:text="${p.price1}">原价：￥12999.00</del>&nbsp;&nbsp;现价：
+						  <strong th:text="'￥'+${p.price2}">￥9999.00</strong>
+						</p>
+						<p th:text="'月销量：'+${p.psale}+'  评价数：'+${p.pcomment}">月销量：500&nbsp;&nbsp;评价数：5000</p>
+						<p>
+							<button class="btn btn-primary">加入购物车</button>
+							<button class="btn btn-danger">立即购买</button>
+						</p>
+					</div>
+					<span class="label label-success new">new</span>
+				</div>
+			</div>
+		</div>
+		<!--分页  居中显示-->
+		<div class="row text-center">
+			<div class="col-lg-12">
+				<ul class="pager">
+					<li><a th:href="@{/tmall/index(currPage=1)}">&laquo;</a></li>
+					<li><a th:href="@{/tmall/index(currPage=${pager.currPage-1})}">&lt;</a></li>
+					<li th:each="pagenum : ${#numbers.sequence(1,pager.totalPage)}"><a th:href="@{/tmall/index(currPage=${pagenum})}" th:text="${pagenum}">1</a></li>
+					<li><a th:href="@{/tmall/index(currPage=${pager.currPage+1})}">&gt;</a></li>
+					<li><a th:href="@{/tmall/index(currPage=${pager.totalPage})}">&raquo;</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+ </body>
+</html>
