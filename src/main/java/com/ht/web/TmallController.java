@@ -34,6 +34,7 @@ public class TmallController {
         pager.page(is.procount());
         pager.data=is.plistpage(pager);
         model.addAttribute("pager",pager);
+        System.out.println("jinlaile");
         return "mall_index";
     }
     //后台列表
